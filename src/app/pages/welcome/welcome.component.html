@@ -1,0 +1,123 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label>Field A</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <input
+            nz-input
+            formControlName="fieldA"
+            placeholder="input placeholder"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label>Field B</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <input
+            nz-input
+            formControlName="filedB"
+            placeholder="input placeholder"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary">Submit</button>
+          <button
+            nz-button
+            nzType="primary"
+            style="float: right"
+            (click)="showModal()"
+          >
+            <i nz-icon nzType="user-add" nzTheme="outline"></i>Add
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<nz-table
+  #borderedTable
+  nzBordered
+  nzSize="middle"
+  [nzData]="dataSet"
+  style="margin-top: 20px"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let felid of theadFelids">{{ felid }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of dataSet">
+      <td>{{ data.patientID }}</td>
+      <td>{{ data.FirstName }}</td>
+      <td>{{ data.lastName }}</td>
+      <td>{{ data.birth }}</td>
+      <td>{{ data.gender }}</td>
+      <td>{{ data.insurance }}</td>
+      <td>{{ data.address }}</td>
+      <td>{{ data.contactNumber }}</td>
+      <td>{{ data.nextKin }}</td>
+      <td>
+        <button
+          nz-button
+          nzType="text"
+          (click)="showModal(data)"
+          style="color: #1467ed"
+        >
+          <i nz-icon nzType="edit" nzTheme="outline"></i>Edit
+        </button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button
+          nz-button
+          nzType="text"
+          nzDanger
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure?"
+          nzOkText="ok"
+          nzCancelText="cancel"
+          (nzOnConfirm)="confirm(data)"
+          (nzOnCancel)="cancel()"
+        >
+          <i nz-icon nzType="delete" nzTheme="outline"></i>Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<!-- <app-add-edit></app-add-edit> -->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #modalTitle>add</ng-template>
+
+  <ng-template #modalContent>
+    <p>Modal Content</p>
+    <p>Modal Content</p>
+    <p>Modal Content</p>
+    <p>Modal Content</p>
+    <p>Modal Content</p>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="handleOk()"
+      [nzLoading]="isConfirmLoading"
+    >
+      Submit
+    </button>
+  </ng-template>
+</nz-modal>
